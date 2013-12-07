@@ -1,0 +1,18 @@
+{
+  "name": "andrewmartin",
+  "version": "0.0.0",
+  "authors": [
+    "Andrew Martin <hello@andrewmart.in>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "highlightjs": "~7.5.0"
+  }
+}

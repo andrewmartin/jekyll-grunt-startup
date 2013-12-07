@@ -1,3 +1,2 @@
 name: Your New Jekyll Site
-markdown: redcarpet
-pygments: true
+exclude: ['Gruntfile.coffee', 'Gemfile', 'Gemfile.lock', 'bower.json', '.bowerrc', 's3_website.yml', 'package.json']
