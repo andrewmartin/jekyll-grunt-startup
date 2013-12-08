@@ -1,0 +1,59 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save-dev',
+1 verbose cli   'grunt-jquery' ]
+2 info using npm@1.3.7
+3 info using node@v0.10.13
+4 warn package.json bl-slate@1.0.0 No repository field.
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'grunt-jquery', null ]
+7 verbose cache add name=undefined spec="grunt-jquery" args=["grunt-jquery",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'grunt-jquery',
+8 verbose parsed url   path: 'grunt-jquery',
+8 verbose parsed url   href: 'grunt-jquery' }
+9 silly lockFile 5b13acc1-grunt-jquery grunt-jquery
+10 verbose lock grunt-jquery /Users/andrewmartin/.npm/5b13acc1-grunt-jquery.lock
+11 silly lockFile 5b13acc1-grunt-jquery grunt-jquery
+12 silly lockFile 5b13acc1-grunt-jquery grunt-jquery
+13 verbose addNamed [ 'grunt-jquery', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile bf4b8b92-grunt-jquery grunt-jquery@
+16 verbose lock grunt-jquery@ /Users/andrewmartin/.npm/bf4b8b92-grunt-jquery.lock
+17 silly addNameRange { name: 'grunt-jquery', range: '*', hasData: false }
+18 verbose url raw grunt-jquery
+19 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-jquery' ]
+20 verbose url resolved https://registry.npmjs.org/grunt-jquery
+21 info trying registry request attempt 1 at 17:57:55
+22 http GET https://registry.npmjs.org/grunt-jquery
+23 http 404 https://registry.npmjs.org/grunt-jquery
+24 silly registry.get cb [ 404,
+24 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R15B03)',
+24 silly registry.get     date: 'Sun, 08 Dec 2013 01:57:56 GMT',
+24 silly registry.get     'content-type': 'application/json',
+24 silly registry.get     'content-length': '52',
+24 silly registry.get     'cache-control': 'must-revalidate' } ]
+25 silly lockFile bf4b8b92-grunt-jquery grunt-jquery@
+26 silly lockFile bf4b8b92-grunt-jquery grunt-jquery@
+27 error 404 'grunt-jquery' is not in the npm registry.
+27 error 404 You should bug the author to publish it
+27 error 404
+27 error 404 Note that you can also install from a
+27 error 404 tarball, folder, or http url, or git url.
+28 error System Darwin 13.0.0
+29 error command "node" "/usr/local/bin/npm" "install" "--save-dev" "grunt-jquery"
+30 error cwd /Users/andrewmartin/Sites/jekyll/andrewmartin
+31 error node -v v0.10.13
+32 error npm -v 1.3.7
+33 error code E404
+34 verbose exit [ 1, true ]

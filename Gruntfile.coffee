@@ -104,6 +104,13 @@ module.exports = (grunt) ->
           dest: 'fonts/'
           flatten: true
         ]
+      jquery:
+        files: [
+          cwd: '_assets/components/jquery/',
+          src: 'jquery.min.js',
+          dest: 'scripts',
+          expand: true
+        ]
 
     # image optimization
     imagemin:

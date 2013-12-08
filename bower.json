@@ -13,6 +13,7 @@
     "tests"
   ],
   "devDependencies": {
-    "highlightjs": "~7.5.0"
+    "highlightjs": "~7.5.0",
+    "jquery": "~2.0.3"
   }
 }
