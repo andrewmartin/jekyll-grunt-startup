@@ -1,6 +1,6 @@
 # Grunt, Bower, and Jekyll
 
-I love Ruby, and I love Node equally. I thought it would be awesome to leverage the powers of the better asset optimization management tool `Grunt` with the more proven and experienced `Jekyll` for static, blog-aware site building.  Yes, I'm aware of the very exciting up and coming [lineman](https://github.com/testdouble/lineman-blog), but it's not quite there yet.
+I love Ruby, and I love Node ~~equally~~ almost as much. I thought it would be awesome to leverage the powers of the better asset optimization management tool `Grunt` with the more proven and experienced `Jekyll` for static, blog-aware site building.  Yes, I'm aware of the very exciting up and coming [lineman](https://github.com/testdouble/lineman-blog), but it's not quite there yet.
 
 This is a simple starter project that is a work in progress.
 
