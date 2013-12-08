@@ -5,7 +5,7 @@ module.exports = (grunt) ->
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
 
   config =
-    assets: "assets"
+    _assets: "_assets"
     dist: "public"
 
   require('time-grunt')(grunt)
@@ -18,53 +18,24 @@ module.exports = (grunt) ->
         spawn: false
 
       images:
-        files: ["assets/images/**/*"]
+        files: ["_assets/images/**/*"]
         tasks: ['imagemin', 'copy']
-
-      "sass-application":
-        files: ["!assets/styles/vendor.sass", "assets/styles/**/*.{scss,sass}"]
-        tasks: ["sass:application"]
-
-      "sass-vendor":
-        files: [
-          "assets/styles/vendor.sass"
-          "assets/styles/_bootstrap_variables_and_overrides.scss"
-          "assets/styles/partial/*.{scss,sass}"
-          "assets/styles/vendor/**/*"
-        ]
-        tasks: ["sass:vendor"]
 
       vendor:
         files: [
-          "assets/scripts/vendor/*.js"
+          "_assets/scripts/vendor/*.js"
         ]
         tasks: ['concat', 'uglify']
 
       coffee:
-        files: ["assets/scripts/**/*.coffee"]
+        files: ["_assets/scripts/**/*.coffee"]
         tasks: ["coffee", "concat"]
 
       livereload:
         files: ["*.html", "*.php", "public/images/**/*.{png,jpg,jpeg,gif,webp,svg}"]
 
-    # sass compilation
+    stylus:
 
-    sass:
-      application:
-        options:
-          style: 'expanded'
-          lineNumbers: true
-        files:
-          'public/css/application.css': 'assets/styles/application.sass'
-      vendor:
-        options:
-          style: 'expanded'
-          lineNumbers: true
-        files:
-          'public/css/vendor.css': 'assets/styles/vendor.sass'
-
-    # combine files
-    # to a single js or css file
 
     concat:
 
@@ -73,8 +44,8 @@ module.exports = (grunt) ->
 
       "application-js":
         src: [
-          "assets/scripts/app/**/*.js"
-          "assets/scripts/application.js"
+          "_assets/scripts/app/**/*.js"
+          "_assets/scripts/application.js"
         ]
         dest: "public/scripts/application.js"
 
@@ -82,14 +53,14 @@ module.exports = (grunt) ->
 
       "vendor-js":
         src: [
-          "assets/components/modernizr/modernizr.js"
-          "assets/components/jquery.easing/js/jquery.easing.min.js"
-          "assets/components/jquery/jquery-migrate.min.js"
-          "assets/components/jquery.transit/jquery.transit.js"
-          "assets/components/jquery.equalheights/jquery.equalheights.min.js"
-          "assets/components/sass-bootstrap/dist/js/bootstrap.js"
-          "assets/components/jquery-mmenu/source/jquery.mmenu.min.all.js"
-          "assets/scripts/vendor/*.js"
+          "_assets/components/modernizr/modernizr.js"
+          "_assets/components/jquery.easing/js/jquery.easing.min.js"
+          "_assets/components/jquery/jquery-migrate.min.js"
+          "_assets/components/jquery.transit/jquery.transit.js"
+          "_assets/components/jquery.equalheights/jquery.equalheights.min.js"
+          "_assets/components/sass-bootstrap/dist/js/bootstrap.js"
+          "_assets/components/jquery-mmenu/source/jquery.mmenu.min.all.js"
+          "_assets/scripts/vendor/*.js"
         ]
         dest: 'public/scripts/vendor.js'
 
@@ -98,8 +69,8 @@ module.exports = (grunt) ->
 
       # "vendor-css":
       #   src: [
-      #     'assets/styles/vendor/**/*.css'
-      #     'assets/styles/vendor.css'
+      #     '_assets/styles/vendor/**/*.css'
+      #     '_assets/styles/vendor.css'
       #   ]
       #   dest: 'public/styles/vendor.css'
 
@@ -109,9 +80,9 @@ module.exports = (grunt) ->
         options:
           sourceMap: true
         expand: true
-        cwd: "assets/scripts"
+        cwd: "_assets/scripts"
         src: "**/*.coffee"
-        dest: "assets/scripts"
+        dest: "_assets/scripts"
         ext: ".js"
 
     # fonts and svg files need to be copied to public folder
@@ -121,14 +92,14 @@ module.exports = (grunt) ->
       fonts:
         files: [
           expand: true
-          src: 'assets/fonts/**/*.{eot,svg,ttf,woff,otf}'
+          src: '_assets/fonts/**/*.{eot,svg,ttf,woff,otf}'
           dest: 'public/fonts/'
           flatten: true
         ]
       images:
         files: [
           expand: true
-          cwd: "assets"
+          cwd: "_assets"
           src: "images/**/*.{png,jpg,jpeg,gif,svg}"
           dest: "public"
         ]
@@ -181,30 +152,15 @@ module.exports = (grunt) ->
             progressive: true
         files: [
           expand: true
-          cwd: 'assets/images/'
+          cwd: '_assets/images/'
           src: '**/*'
           dest: 'public/images/'
         ]
 
-    # for deployments
-
-    compress:
-      archive:
-        options:
-          archive: ".tmp/archive.zip"
-        files:
-          src: ['./**/*', '!./assets/**','!./db/**','!./node_modules/**']
-
-      dist:
-        options: mode: 'gzip'
-        expand: true
-        cwd: 'public/scripts'
-        src: "**/*.js"
-        dest: "public/scripts"
-
     clean:
       all: ["_site/**/*"]
 
+    open:
       dev:
         path: 'http://localhost:4000'
         app: 'Google Chrome'
@@ -220,21 +176,11 @@ module.exports = (grunt) ->
     concurrent:
       build: ['copy']
       compress: ['uglify', 'cssmin', 'imagemin']
-    # sshconfig:
-      # dev:
-      #   host: "badassembly.com"
-      #   username: ""
-      #   password: ""
-      #   path: ""
-
-    # sshexec:
-    #   unzip: "unzip ./tmp/release.zip"
 
     sftp:
       deploy:
         files:
-          "./": "{**/*, !assets/}"
-
+          "./": "{**/*, !_assets/}"
 
   # Tasks
   grunt.registerTask('default', ['exec:serve', 'open'])
