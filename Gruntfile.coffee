@@ -4,17 +4,14 @@ module.exports = (grunt) ->
   # load all grunt tasks
   require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
 
-  config =
-    _assets: "_assets"
-    dist: "public"
-
   require('time-grunt')(grunt)
+
   # config
   grunt.initConfig
 
     watch:
       options:
-        livereload: true
+        livereload: false
         spawn: false
 
       images:
@@ -24,55 +21,42 @@ module.exports = (grunt) ->
       vendor:
         files: [
           "_assets/scripts/vendor/*.js"
+          "_assets/scripts/vendor/**/*.js"
         ]
-        tasks: ['concat', 'uglify']
+        tasks: ["concurrent:compress"]
 
       coffee:
         files: ["_assets/scripts/**/*.coffee"]
-        tasks: ["coffee", "concat"]
+        tasks: ["coffee", "concurrent:compress"]
 
-      livereload:
-        files: ["*.html", "*.php", "public/images/**/*.{png,jpg,jpeg,gif,webp,svg}"]
+      styles:
+        files: ["_assets/styles/**/*.styl"]
+        tasks: ["stylus", ""]
 
     stylus:
-
+      application:
+        options:
+          linenos: true
+          'include css': true
+        files:
+          'css/application.css': '_assets/styles/application.styl'
 
     concat:
 
-      # # this may be overkill;
-      # # maybe just have the coffee output to public/
-
-      "application-js":
+      application:
         src: [
           "_assets/scripts/app/**/*.js"
           "_assets/scripts/application.js"
         ]
-        dest: "public/scripts/application.js"
+        dest: "scripts/application.js"
 
-      # load in vendor js libraries
-
-      "vendor-js":
+      vendor:
         src: [
           "_assets/components/modernizr/modernizr.js"
-          "_assets/components/jquery.easing/js/jquery.easing.min.js"
-          "_assets/components/jquery/jquery-migrate.min.js"
-          "_assets/components/jquery.transit/jquery.transit.js"
-          "_assets/components/jquery.equalheights/jquery.equalheights.min.js"
-          "_assets/components/sass-bootstrap/dist/js/bootstrap.js"
-          "_assets/components/jquery-mmenu/source/jquery.mmenu.min.all.js"
+          "_assets/components/scripts/highlight.pack.js"
           "_assets/scripts/vendor/*.js"
         ]
-        dest: 'public/scripts/vendor.js'
-
-      # load in vendor styles
-      # we should probably just use sass to import them...
-
-      # "vendor-css":
-      #   src: [
-      #     '_assets/styles/vendor/**/*.css'
-      #     '_assets/styles/vendor.css'
-      #   ]
-      #   dest: 'public/styles/vendor.css'
+        dest: 'scripts/vendor.js'
 
     # compiles all coffeescript 1 to 1
     coffee:
@@ -85,66 +69,43 @@ module.exports = (grunt) ->
         dest: "_assets/scripts"
         ext: ".js"
 
-    # fonts and svg files need to be copied to public folder
-    # since they are not compressed with any other tasks.
-
-    copy:
-      fonts:
-        files: [
-          expand: true
-          src: '_assets/fonts/**/*.{eot,svg,ttf,woff,otf}'
-          dest: 'public/fonts/'
-          flatten: true
-        ]
-      images:
-        files: [
-          expand: true
-          cwd: "_assets"
-          src: "images/**/*.{png,jpg,jpeg,gif,svg}"
-          dest: "public"
-        ]
-
 # minification and beautification tasks
 
     # minify and compress css
-
     cssmin:
       options:
         report: 'min'
         banner: "/* minified via grunt task. Check Gruntfile.coffee for more info. */"
       app:
-        files: "public/css/application.min.css": "public/css/application.css"
-      vendor:
-        files: "public/css/vendor.min.css": "public/css/vendor.css"
+        files: "css/application.min.css": "css/application.css"
 
     # uglify pages and vendor javsacript files
-
     uglify:
-      # dist:
-      #   files: [
-      #     expand: true
-      #     cwd: "public/scripts"
-      #     src: "*.js"
-      #     dest: "public/scripts"
-      #     ext: ".min.js"
-      #   ]
-      "application-js":
+      application:
         options:
           report: 'min'
         files:
-          'public/scripts/application.min.js': [
-            'public/scripts/application.js'
+          'scripts/application.min.js': [
+            'scripts/application.js'
           ]
       vendor:
         options:
           report: 'min'
         files:
-          'public/scripts/vendor.min.js': [
-            'public/scripts/vendor.js'
+          'scripts/vendor.min.js': [
+            'scripts/vendor.js'
           ]
 
-    # image optimization
+    copy:
+      fonts:
+        files: [
+          expand: true
+          src: '_assets/fonts/*'
+          dest: 'fonts/'
+          flatten: true
+        ]
 
+    # image optimization
     imagemin:
       dist:
         options:
@@ -154,7 +115,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: '_assets/images/'
           src: '**/*'
-          dest: 'public/images/'
+          dest: 'images/'
         ]
 
     clean:
@@ -174,8 +135,8 @@ module.exports = (grunt) ->
     # let's run some tasks simultaneously
 
     concurrent:
-      build: ['copy']
-      compress: ['uglify', 'cssmin', 'imagemin']
+      build: ['copy', 'stylus', 'coffee']
+      compress: ['concat', 'uglify', 'cssmin', 'imagemin']
 
     sftp:
       deploy:
@@ -183,9 +144,5 @@ module.exports = (grunt) ->
           "./": "{**/*, !_assets/}"
 
   # Tasks
-  grunt.registerTask('default', ['exec:serve', 'open'])
-
-  # grunt.registerTask('build', ['coffee', 'sass', 'concurrent:build', 'concat', 'concurrent:compress'])
-  # grunt.registerTask('zip', ['compress:zip'])
-  # grunt.registerTask('deploy', ['build', 'sftp:deploy'])
-  # grunt.registerTask('default', ['coffee', 'sass', 'concurrent:build', 'concat', 'concurrent:compress', 'open:dev', 'watch'])
+  grunt.registerTask('default', ['concurrent', 'open', 'watch'])
+  grunt.registerTask('serve', ['exec'])
