@@ -53,7 +53,7 @@ module.exports = (grunt) ->
       vendor:
         src: [
           "_assets/components/modernizr/modernizr.js"
-          "_assets/components/scripts/highlight.pack.js"
+          "_assets/components/highlightjs/highlight.pack.js"
           "_assets/scripts/vendor/*.js"
         ]
         dest: 'scripts/vendor.js'
@@ -151,5 +151,5 @@ module.exports = (grunt) ->
           "./": "{**/*, !_assets/}"
 
   # Tasks
-  grunt.registerTask('default', ['concurrent', 'open', 'watch'])
+  grunt.registerTask('default', ['concurrent:build', 'concurrent:compress', 'open', 'watch'])
   grunt.registerTask('serve', ['exec'])

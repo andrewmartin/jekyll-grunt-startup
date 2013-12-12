@@ -1,6 +1,7 @@
 (function() {
   $(function() {
-    return console.log("living well is the best revenge...");
+    console.log("living well is the best revenge...");
+    return hljs.initHighlightingOnLoad();
   });
 
 }).call(this);
